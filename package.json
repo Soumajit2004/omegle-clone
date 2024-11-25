@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:server": "npm run serve --workspace=packages/server",
+    "dev:client": "npm run dev --workspace=packages/client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "workspaces": [
     "packages/client",
