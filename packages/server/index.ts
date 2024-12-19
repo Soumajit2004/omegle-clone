@@ -1,18 +1,19 @@
 import express from "express"
+import {createServer} from "node:https";
+import {Server} from "socket.io";
 import morgan from 'morgan'
 
-import websocketsRouter from "./routes/websockets.router";
-
 const app = express()
+const server = createServer(app)
+const io = new Server(server, {cors: {origin: '*', methods: ['GET', 'POST']}})
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
-app.get('/', (req, res) => {
-  res.json({message: 'Hello World Hello'})
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
+server.listen(3000, () => {
+  console.log("Server is running on port 3000")
 })
 
-app.use('/websocket', websocketsRouter)
-
-app.listen(8080, () => {
-  console.log('SERVER STARTED : PORT 8080')
-})
