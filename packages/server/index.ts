@@ -1,11 +1,18 @@
 import express from "express"
+import morgan from 'morgan'
+
+import websocketsRouter from "./routes/websockets.router";
 
 const app = express()
 
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+
 app.get('/', (req, res) => {
-  res.send('Hello World')
+  res.json({message: 'Hello World Hello'})
 })
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000')
+app.use('/websocket', websocketsRouter)
+
+app.listen(8080, () => {
+  console.log('SERVER STARTED : PORT 8080')
 })
